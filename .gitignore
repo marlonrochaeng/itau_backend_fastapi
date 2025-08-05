@@ -1,0 +1,108 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+venv/
+ENV/
+.venv/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+
+# FastAPI / Uvicorn logs
+*.log
+
+# Pytest
+.cache/
+
+# mypy
+.mypy_cache/
+
+# Pyre type checker
+.pyre/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# dotenv environment variables file
+.env
+.env.*
+
+# macOS
+.DS_Store
+
+# Docker
+docker-compose.override.yml
+docker-compose.override.yaml
+
+# SQLAlchemy or Alembic migrations (optional, usually version-controlled)
+# alembic/versions/
+
+# VS Code settings (optional)
+.vscode/
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+*.bak
+
+# Python virtual environments
+.env/
+.venv/
+env/
+venv/
+
+# SQLite database files (if using SQLite and want to ignore DB file)
+*.db
+*.sqlite3
