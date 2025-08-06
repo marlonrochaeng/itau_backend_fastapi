@@ -4,6 +4,7 @@ from typing import Annotated
 from sqlmodel import select
 from datetime import datetime, timezone
 from fastapi.responses import JSONResponse
+from datetime import datetime, timedelta
 
 
 async def lifespan(app: FastAPI):
@@ -50,3 +51,12 @@ def get_transaction_by_id(transaction_id: int, session: SessionDep):
     if not transaction:
         raise HTTPException(status_code=404, detail="Transaction not found")
     return transaction
+
+
+@app.get("/transactions/last/{days}")
+def get_transactions_in_n_days(days: int, session: SessionDep):
+    last_n_days = datetime.utcnow() - timedelta(days=days)
+    transactions = select(Transactions).where(Transactions.dataHora >= last_n_days)
+    transactions = session.exec(transactions).all()
+
+    return transactions
