@@ -30,6 +30,8 @@ def add_transaction(transaction: Transactions, session: SessionDep):
     dataHora = datetime.fromisoformat(transaction.dataHora)
     if dataHora > datetime.now(timezone.utc):
         raise HTTPException(status_code=400, detail="dataHora can`t be in the future!")
+    if transaction.value < 0:
+        raise HTTPException(status_code=400, detail="value can`t be negative!")
     else:
         session.add(transaction)
         session.commit()
@@ -37,6 +39,14 @@ def add_transaction(transaction: Transactions, session: SessionDep):
             status_code=200,
             content={
                 "message": "Transaction added successfully!",
-                "transaction": transaction.model_dump_json(),
+                # "transaction": transaction.json(),
             },
         )
+
+
+@app.get("/transactions/{transaction_id}", response_model=Transactions)
+def get_transaction_by_id(transaction_id: int, session: SessionDep):
+    transaction = session.get(Transactions, transaction_id)
+    if not transaction:
+        raise HTTPException(status_code=404, detail="Transaction not found")
+    return transaction
