@@ -60,3 +60,20 @@ def get_transactions_in_n_days(days: int, session: SessionDep):
     transactions = session.exec(transactions).all()
 
     return transactions
+
+
+@app.delete("/transactions/{transaction_id}")
+def delete_transaction(transaction_id: int, session: SessionDep):
+    transaction = session.get(Transactions, transaction_id)
+    if not transaction:
+        raise HTTPException(status_code=404, detail="Transaction not found")
+    session.delete(transaction)
+    session.commit()
+
+    return JSONResponse(
+        status_code=202,
+        content={
+            "message": "Transaction deleted successfully!",
+            # "transaction": transaction.json(),
+        },
+    )
