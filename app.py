@@ -59,6 +59,27 @@ def get_transactions_in_n_days(days: int, session: SessionDep):
     transactions = select(Transactions).where(Transactions.dataHora >= last_n_days)
     transactions = session.exec(transactions).all()
 
+    if transactions:
+        _min = min(t.value for t in transactions)
+        _max = max(t.value for t in transactions)
+        _sum = sum(t.value for t in transactions)
+        _avg = _sum / len(transactions)
+        _count = len(transactions)
+
+        return JSONResponse(
+            status_code=200,
+            content={
+                "message": {
+                    "min": _min,
+                    "max": _max,
+                    "sum": _sum,
+                    "avg": _avg,
+                    "count": _count,
+                },
+                # "transaction": transaction.json(),
+            },
+        )
+
     return transactions
 
 
