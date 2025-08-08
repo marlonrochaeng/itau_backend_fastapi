@@ -1,5 +1,5 @@
 from fastapi import Depends, FastAPI, HTTPException, Query
-from db import *
+from .db import *
 from typing import Annotated
 from sqlmodel import select
 from datetime import datetime, timezone
@@ -37,7 +37,7 @@ def add_transaction(transaction: Transactions, session: SessionDep):
         session.add(transaction)
         session.commit()
         return JSONResponse(
-            status_code=200,
+            status_code=201,
             content={
                 "message": "Transaction added successfully!",
                 # "transaction": transaction.json(),
@@ -80,7 +80,19 @@ def get_transactions_in_n_days(days: int, session: SessionDep):
             },
         )
 
-    return transactions
+    return JSONResponse(
+        status_code=200,
+        content={
+            "message": {
+                "min": 0,
+                "max": 0,
+                "sum": 0,
+                "avg": 0,
+                "count": 0,
+            },
+            # "transaction": transaction.json(),
+        },
+    )
 
 
 @app.delete("/transactions/{transaction_id}")

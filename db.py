@@ -1,6 +1,7 @@
 from typing import Annotated
 from datetime import datetime
 from typing import Optional
+from sqlalchemy import text  # <-- import text
 
 
 from fastapi import Depends, FastAPI, HTTPException, Query
@@ -21,6 +22,12 @@ engine = create_engine(postgres_url, echo=True)
 
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
+
+
+def clear_db():
+    with Session(engine) as s:
+        s.exec(text("delete from transactions"))
+        s.commit()
 
 
 def get_session():
